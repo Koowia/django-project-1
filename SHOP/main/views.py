@@ -12,7 +12,17 @@ def product_list(request, category_slug=None):
         category = get_object_or_404(Category, slug=category_slug)
         products = products.filter(category=category)
 
-    return render(request, 'main/product/list.html', {'category': category, 'categories': categories, 'products': products})
+    sort = request.GET.get('sort', 'name')
+    allowed_sorts = ['name', '-name', 'price', '-price']
+    if sort in allowed_sorts:
+        products = products.order_by(sort)
+
+    return render(request, 'main/product/list.html', {
+            'category': category,
+            'categories': categories,
+            'products': products,
+            'current_sort': sort,
+        })
 
 
 def product_detail(request, id, slug):
