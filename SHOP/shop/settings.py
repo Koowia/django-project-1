@@ -141,3 +141,26 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+INSTALLED_APPS += ['csp']
+MIDDLEWARE += ['csp.middleware.CSPMiddleware']
+
+CONTENT_SECURITY_POLICY = {
+    'DIRECTIVES': {
+        'default-src': ("'self'",),
+        'script-src': ("'self'", "cdn.jsdelivr.net"),
+        'style-src': ("'self'", "cdn.jsdelivr.net", "'unsafe-inline'"),
+        'font-src': ("cdn.jsdelivr.net",),
+        'img-src': ("'self'", "data:"),
+    }
+}
+
+PERMISSIONS_POLICY = {
+    "geolocation": [],
+    "microphone": [],
+    "camera": [],
+}
