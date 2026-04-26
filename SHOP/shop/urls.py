@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('panel-kwdev-adm', admin.site.urls),
+    path('panel-kwdev-adm/', admin.site.urls),
     path('cart/', include('cart.urls', namespace='cart')),
     path('', include('main.urls', namespace='main')),
 ]
